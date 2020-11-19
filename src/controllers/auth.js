@@ -10,17 +10,21 @@ router.get("/sing-in", (req, res) => {
   return res.json("Sing in!");
 });
 
-router.get("/sing-up", async (req, res) => {
-  const email = "heberthkk@gmial.com";
-  const password = "123456";
+router.post("/sing-up", async (req, res) => {
+  const { email, password } = req.body;
+
+  const account = await Account.findOne({ where: { email } });
+
+  if (account) return res.json("account already exists");
+
   const hash = bcrypt.hashSync(password, saltRounds);
 
-  const result = await Account.create({
+  const newAccount = await Account.create({
     email,
     password: hash,
   });
 
-  return res.json(result);
+  return res.json(newAccount);
 });
 
 module.exports = router;
