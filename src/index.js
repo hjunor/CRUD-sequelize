@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/auth", authController);
 
 db.sequelize.sync().then(() => {
-  app.listen(3001, () => {
+  app.listen(3000, () => {
     console.log("Server start 🔥");
   });
 });
