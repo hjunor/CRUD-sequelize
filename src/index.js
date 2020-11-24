@@ -8,12 +8,12 @@ const linkController = require("./controllers/link");
 const app = express();
 
 app.use(response);
-
+app.use(checkJwt);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authController);
-app.use("/link", checkJwt, linkController);
+app.use("/link", linkController);
 
 db.sequelize.sync().then(() => {
   app.listen(3000, () => {
