@@ -2,11 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const { Account } = require("../models");
 const { getMessage } = require("../helpers/messages");
-const {
-  generateJwt,
-  verifyJwt,
-  generateRefreshJwt,
-} = require("../helpers/jwt");
+const { generateJwt, generateRefreshJwt } = require("../helpers/jwt");
 const { accountSingUp, accountSingIn } = require("../validators/account");
 const router = express.Router();
 
@@ -21,8 +17,13 @@ router.post("/sing-in", accountSingIn, async (req, res) => {
   if (!match) {
     return res.jsonBadRequest(null, getMessage("account.signin.invalid"));
   }
+
   const token = generateJwt({ id: account.id });
-  const refreshToken = generateRefreshJwt({ id: account.id });
+
+  const refreshToken = generateRefreshJwt({
+    id: account.id,
+    version: account.jwtVersion,
+  });
 
   return res.jsonOK(account, getMessage("account.signin.success"), {
     token,
@@ -46,7 +47,11 @@ router.post("/sing-up", accountSingUp, async (req, res) => {
   });
 
   const token = generateJwt({ id: newAccount.id });
-  const refreshToken = generateRefreshJwt({ id: newAccount.id });
+
+  const refreshToken = generateRefreshJwt({
+    id: newAccount.id,
+    version: newAccount.jwtVersion,
+  });
 
   return res.jsonOK(newAccount, getMessage("account.signup.success"), {
     token,
