@@ -1,8 +1,8 @@
 const { verify } = require("jsonwebtoken");
-const { verifyJwt } = require("../helpers/jwt");
+const { verifyJwt, getTokenFromHeaders } = require("../helpers/jwt");
 
 const pathExchuded = (path) => {
-  const excludePaths = ["/auth/sing-in", "/auth/sing-up"];
+  const excludePaths = ["/auth/sing-in", "/auth/sing-up", "/auth/refresh"];
 
   const isExcluded = !!excludePaths.find((isPath) => isPath.startsWith(path));
 
@@ -14,8 +14,7 @@ const checkJwt = (req, res, next) => {
 
   if (pathExchuded(path)) return next();
 
-  let token = req.headers["authorization"];
-  token = token ? token.slice(7, token.length) : null;
+  const token = getTokenFromHeaders(req.headers);
 
   if (!token) {
     return res.jsonUnauthorized(null, "Invalid token");
