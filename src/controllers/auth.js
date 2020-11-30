@@ -13,14 +13,17 @@ const router = express.Router();
 
 const saltRounds = 10;
 
-router.post("/sing-in", accountSingIn, async (req, res) => {
+router.post("/sign-in", accountSingIn, async (req, res) => {
   const { email, password } = req.body;
 
   const account = await Account.findOne({ where: { email } });
 
   const match = account ? bcrypt.compareSync(password, account.password) : null;
   if (!match) {
-    return res.jsonBadRequest(null, getMessage("account.signin.invalid"));
+    return res.jsonBadRequest(
+      { email, senha },
+      getMessage("account.signin.invalid")
+    );
   }
 
   const token = generateJwt({ id: account.id });
@@ -36,7 +39,7 @@ router.post("/sing-in", accountSingIn, async (req, res) => {
   });
 });
 
-router.post("/sing-up", accountSingUp, async (req, res) => {
+router.post("/sign-up", accountSingUp, async (req, res) => {
   const { email, password } = req.body;
 
   const account = await Account.findOne({ where: { email } });

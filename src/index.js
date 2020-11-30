@@ -18,7 +18,7 @@ app.use("/auth", authController);
 app.use("/link", linkController);
 
 db.sequelize.sync().then(() => {
-  app.listen(3000, () => {
+  app.listen(3001, () => {
     console.log("Server start 🔥");
   });
 });

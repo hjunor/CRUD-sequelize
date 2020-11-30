@@ -1,8 +1,7 @@
-const { verify } = require("jsonwebtoken");
 const { verifyJwt, getTokenFromHeaders } = require("../helpers/jwt");
 
 const pathExchuded = (path) => {
-  const excludePaths = ["/auth/sing-in", "/auth/sing-up", "/auth/refresh"];
+  const excludePaths = ["/auth/sign-in", "/auth/sign-up", "/auth/refresh"];
 
   const isExcluded = !!excludePaths.find((isPath) => isPath.startsWith(path));
 
