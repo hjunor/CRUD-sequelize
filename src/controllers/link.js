@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const { accountId } = req; // req.id
-  const { id } = req.body;
+  const { id } = req.params;
   const link = await Link.findOne({ where: { id, accountId } });
 
   if (!link) return res.jsonNotFound(null, "Não encontrado");
