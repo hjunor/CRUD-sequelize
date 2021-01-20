@@ -22,6 +22,8 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: process.env.DB,
-    operatorAliases: "0",
+    dialect: "postgres",
+    protocol: "postgres",
+    port: process.env.DB_PORT,
   },
 };
