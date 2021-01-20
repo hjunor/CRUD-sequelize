@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const db = require("./models/index");
@@ -18,7 +19,7 @@ app.use("/auth", authController);
 app.use("/link", linkController);
 
 db.sequelize.sync().then(() => {
-  app.listen(3001, () => {
+  app.listen(process.env.PORT || 3001, () => {
     console.log("Server start 🔥");
   });
 });
