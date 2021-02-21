@@ -49,6 +49,8 @@ router.post("/sign-up", accountSingUp, async (req, res) => {
 
   const hash = bcrypt.hashSync(password, saltRounds);
 
+  console.log(hash)
+
   const newAccount = await Account.create({
     email,
     password: hash,
@@ -90,5 +92,7 @@ router.post("/refresh", async (req, res) => {
     return res.jsonUnauthorized(null, "Invalid token");
   }
 });
+
+
 
 module.exports = router;
