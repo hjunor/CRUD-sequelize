@@ -5,8 +5,10 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const { accountId } = req;
 
-  const liks = await Link.findAll({ where: { accountId } });
-  return res.jsonOK(liks);
+  const links = await Link.findAll({ where: { accountId } });
+  if (!link) return res.jsonNotFound();
+
+  return res.jsonOK(links);
 });
 
 router.get("/:id", async (req, res) => {
