@@ -1,7 +1,7 @@
 const { verifyJwt, getTokenFromHeaders } = require("../helpers/jwt");
 
 const pathExchuded = (path) => {
-  const excludePaths = ["/auth/sign-in", "/auth/sign-up", "/auth/refresh"];
+  const excludePaths = ["/auth/sign-in", "/auth/sign-up", "/auth/refresh", "/links"];
 
   const isExcluded = !!excludePaths.find((isPath) => isPath.startsWith(path));
 
